@@ -174,7 +174,11 @@ module Mongoid::FullTextSearch
     end
     
     def instantiate_mapreduce_result(result)
-      self.find(result[:id])
+      if self.name == result[:clazz]
+        self.find(result[:id])
+      else
+        result[:clazz].constantize.find(result[:id])
+      end
     end
     
     def instantiate_mapreduce_results(results, options)
